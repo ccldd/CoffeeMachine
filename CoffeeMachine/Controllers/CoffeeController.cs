@@ -9,7 +9,7 @@ namespace CoffeeMachine.Controllers;
 /// </summary>
 [ApiController]
 [Route("")]
-public class CoffeeController(ICoffeeService coffeeService) : ControllerBase
+public class CoffeeController(ICoffeeService coffeeService, ILogger<CoffeeController> logger) : ControllerBase
 {
     /// <summary>
     /// Brews coffee.
@@ -33,8 +33,14 @@ public class CoffeeController(ICoffeeService coffeeService) : ControllerBase
                 TypedResults.StatusCode(StatusCodes.Status503ServiceUnavailable),
             BrewCoffeeResult.NotBrewingCoffeeToday =>
                 TypedResults.StatusCode(StatusCodes.Status418ImATeapot),
-            _ => TypedResults.StatusCode(StatusCodes.Status500InternalServerError)
+            _ => UnhandledBrewCoffeeResult(),
         };
+    }
+
+    private StatusCodeHttpResult UnhandledBrewCoffeeResult()
+    {
+        logger.LogWarning("Unhandled BrewCoffeeResult");
+        return TypedResults.StatusCode(StatusCodes.Status500InternalServerError);
     }
 }
 
