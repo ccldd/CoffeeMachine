@@ -1,0 +1,1 @@
+* No timezone was specified. I assumed that the timezone for any date and time related operations is UTC.
