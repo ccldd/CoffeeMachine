@@ -1,9 +1,13 @@
 ﻿namespace CoffeeMachine.Services;
 
+/// <inheritdoc cref="ICoffeeService"/>
 public class CoffeeService(TimeProvider timeProvider) : ICoffeeService
 {
     private int _brewCount = 0;
 
+    /// <summary>
+    /// Brew coffee!
+    /// </summary>
     public BrewCoffeeResult BrewCoffee()
     {
         if (IsAprilFirst())

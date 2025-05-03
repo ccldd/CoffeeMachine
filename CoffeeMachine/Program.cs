@@ -17,6 +17,13 @@ builder.Services.AddSingleton(TimeProvider.System);
 // This is a singleton as it contains the count of brews
 builder.Services.AddSingleton<ICoffeeService, CoffeeService>();
 
+builder.Services.AddHttpClient<IWeatherService, WeatherService>();
+builder.Services.AddOptions<WeatherServiceOptions>()
+    .Bind(builder.Configuration.GetSection("WeatherService"))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+builder.Services.AddMemoryCache();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,4 +41,6 @@ app.MapControllers();
 
 app.Run();
 
+/// <summary>
+/// </summary>
 public partial class Program { }

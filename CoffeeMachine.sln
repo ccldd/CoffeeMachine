@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Readme.txt = Readme.txt
+		ReadyTech Developer Technical Test (2).docx = ReadyTech Developer Technical Test (2).docx
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeMachine.UnitTests", "CoffeeMachine.UnitTests\CoffeeMachine.UnitTests.csproj", "{4FC9D4C0-6E14-4687-87A6-7BE55E23ADB9}"
