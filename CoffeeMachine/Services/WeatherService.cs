@@ -10,8 +10,19 @@ namespace CoffeeMachine.Services
     /// <summary>
     /// Uses the free Open Meteo API to get the weather.
     /// </summary>
-    public class WeatherService(HttpClient httpClient, IOptions<WeatherServiceOptions> options) : IWeatherService
+    public class WeatherService : IWeatherService
     {
+        private readonly HttpClient _httpClient;
+        private readonly IOptions<WeatherServiceOptions> _options;
+
+        public WeatherService(HttpClient httpClient, IOptions<WeatherServiceOptions> options)
+        {
+            _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri(options.Value.BaseUrl);
+
+            _options = options;
+        }
+
         /// <summary>
         /// Get the current weather.
         /// </summary>
@@ -22,15 +33,15 @@ namespace CoffeeMachine.Services
         {
             try
             {
-                var url = QueryHelpers.AddQueryString($"{options.Value.BaseUrl}/forecast", new Dictionary<string, string?>
+                var url = QueryHelpers.AddQueryString("forecast", new Dictionary<string, string?>
                 {
-                    ["latitude"] = options.Value.Latitude.ToString(),
-                    ["longitude"] = options.Value.Longitude.ToString(),
+                    ["latitude"] = _options.Value.Latitude.ToString(),
+                    ["longitude"] = _options.Value.Longitude.ToString(),
                     ["current"] = "temperature_2m",
                     ["timezone"] = "auto",
                 });
 
-                var response = await httpClient.GetFromJsonAsync<OpenMeteoForecastResponse>(url, cancellationToken);
+                var response = await _httpClient.GetFromJsonAsync<OpenMeteoForecastResponse>(url, cancellationToken);
                 if (response is null)
                 {
                     throw new WeatherServiceException("Failed to get weather data.");

@@ -12,4 +12,9 @@
     <InternalsVisibleTo Include="CoffeeMachine.IntegrationTests"/>
   </ItemGroup>
 
+  <PropertyGroup>
+    <!-- GenerateDocumentationFile raises this warning -->
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
 </Project>
